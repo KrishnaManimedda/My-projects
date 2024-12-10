@@ -1,0 +1,161 @@
+-- Create the database
+CREATE DATABASE NCL_Group_of_Industries;
+
+-- Use the newly created database
+USE NCL_Group_of_Industries;
+
+-- Create the Doors_Division table with the specified columns and an auto-incrementing serial number
+CREATE TABLE Doors_Division (
+    S_NO INT AUTO_INCREMENT PRIMARY KEY,
+    EMPLOYEES_NAME VARCHAR(255),
+    DEPARTMENT VARCHAR(255),
+    JOB_ROLE VARCHAR(255),
+    SALARY DECIMAL(10, 2)
+);
+
+-- Insert the initial data into the Doors_Division table
+INSERT INTO Doors_Division (EMPLOYEES_NAME, DEPARTMENT, JOB_ROLE, SALARY) VALUES
+('Gopal Raju', 'Management', 'General Manager', 100000.00),
+('Krishna', 'Instrumentation', 'G.E.T', 210000.00);
+
+-- Switch to the desired database
+
+-- Switch to the desired database
+USE NCL_Group_of_Industries;
+
+-- Insert new rows into the Doors_Division table including the S_NO column
+INSERT INTO Doors_Division (S_NO, EMPLOYEES_NAME, DEPARTMENT, JOB_ROLE, SALARY) VALUES
+(7, 'Basha', 'Electrical', 'Snr Technnician', 25000.00),
+(8, 'Madhuvarma', 'Mechanical', 'Manager', 40000.00),
+(9, 'Phani Kumar', 'Production', 'Manager', 45000.00);
+SET SQL_SAFE_UPDATES = 0;
+
+SELECT * FROM DOORS_DIVISION;
+
+-- Verify the inserted data
+SELECT * FROM Doors_Division;
+
+--- salary bonus increment as 15%
+UPDATE Doors_division
+SET SALARY_BONUS = SALARY * 0.15; 
+UPDATE Doors_division
+SET salary = 30000
+WHERE employees_name = 'Subbaraju';
+
+---- add column name total salary 
+
+ALTER TABLE Doors_division
+ADD COLUMN TOTAL_SALARY DECIMAL (10,2);
+UPDATE Doors_division
+SET TOTAL_SALARY  = SALARY + SALARY_BONUS ; 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+---- creating another table
+CREATE TABLE EMPLOYEES (
+    EMPLOYEES_NAME VARCHAR(255),
+    DEPARTMENT VARCHAR(255)
+    );
+    INSERT INTO EMPLOYEES (EMPLOYEES_NAME, DEPARTMENT) VALUES 
+    ('GOPAL raju', 'Management'),
+    ('Krishna', 'Instrumentation'),
+	('Sameer', 'Instrumentation'),
+	('Subbaraju', 'Electrical'),
+	('Basha', 'Electrical'),
+	('Madhuvarma', 'Mechanical'),
+	('Phani Kumar', 'Production');
+    SELECT  * FROM EMPLOYEES;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+--- CREATING ANOTHER TABLE WITH JOB ROLES
+
+CREATE TABLE EMPLOYEES_ROLE(
+		EMPLOYEE_NAME VARCHAR (25),
+        JOB_ROLE VARCHAR (25)
+        );
+INSERT INTO EMPLOYEES_ROLE (EMPLOYEE_NAME, JOB_ROLE) VALUES 
+       ('Gopal Raju', 100000),
+       ('Krishna', 21000),
+       ('Sameer', 40000),
+	   ('Subbaraju', 30000),  -- Note: Commas removed
+       ('Basha', 25000),
+	   ('Madhuvarma', 40000),
+       ('Phani Kumar', 45000);
+       RENAME TABLE EMPLOYEES_ROLE TO EMPLOYEES_SALARY;
+       ALTER TABLE EMPLOYEES_SALARY
+	   CHANGE COLUMN JOB_ROLE SALARY DECIMAL(10, 2);  -- Use the current data type of the column
+
+----- CREATING TABLE SENIOR EMPLOYEES
+
+CREATE TABLE SENIOR_EMPLOYEES (
+			EMPLOYEES_NAME VARCHAR(25),
+            JOB_ROLE VARCHAR(25),
+            EXPERIENCE INT
+            );
+ INSERT INTO SENIOR_EMPLOYEES (EMPLOYEES_NAME, JOB_ROLE, EXPERIENCE) 
+		VALUES
+        ('Gopal raju', 'Manager', '30'),
+        ('Sameer', 'Asst Manager', '5'),
+        ('Basha', 'Technician', '10'),
+        ('Madhuvarma', 'Manager', '2'),
+SELECT * FROM SENIOR_EMPLOYEES;
+		
+  SELECT * FROM  EMPLOYEES_SALARY;
+  SELECT * FROM EMPLOYEES;
+  SELECT * FROM Doors_Division;
+  SELECT * FROM SENIOR_EMPLOYEES;
+  -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  ---INNER JOIN
+  SELECT * 
+		FROM EMPLOYEES_SALARY
+		INNER JOIN SENIOR_EMPLOYEES
+        ON EMPLOYEES_SALARY.EMPLOYEES_NAME = SENIOR_EMPLOYEES.EMPLOYEES_NAME
+        
+  
+--- COLUMN NAME MISMATCHED & CHANGINGM THE COLUMN NAME 
+ALTER TABLE EMPLOYEES_SALARY
+CHANGE COLUMN EMPLOYEE_NAME EMPLOYEES_NAME VARCHAR(25);
+
+
+  ---LEFT JOIN
+  SELECT * 
+		FROM  EMPLOYEES_SALARY 
+		LEFT JOIN SENIOR_EMPLOYEES
+        ON EMPLOYEES_SALARY .EMPLOYEES_NAME = SENIOR_EMPLOYEES.EMPLOYEES_NAME
+        
+  ---RIGHT JOIN
+  SELECT * 
+		FROM EMPLOYEES_SALARY
+		RIGHT JOIN SENIOR_EMPLOYEES
+        ON EMPLOYEES_SALARY.EMPLOYEES_NAME = SENIOR_EMPLOYEES.EMPLOYEES_NAME        
+   
+ ---UNION JOIN
+   SELECT * 
+		FROM  EMPLOYEES_SALARY 
+		LEFT JOIN SENIOR_EMPLOYEES
+        ON EMPLOYEES_SALARY .EMPLOYEES_NAME = SENIOR_EMPLOYEES.EMPLOYEES_NAME
+ UNION
+   SELECT * 
+		FROM EMPLOYEES_SALARY
+		RIGHT JOIN SENIOR_EMPLOYEES
+        ON EMPLOYEES_SALARY.EMPLOYEES_NAME = SENIOR_EMPLOYEES.EMPLOYEES_NAME 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------        
+        
+USE NCL_Group_of_Industries;
+SHOW TABLES
+
+--- ARITHMETIC OPERATORS
+SELECT SALARY_BONUS + SALARY AS FINAL_SALARY
+FROM DOORS_DIVISION;
+
+SELECT TOTAL_SALARY - SALARY_BONUS AS ACTUAL_SALARY
+FROM DOORS_DIVISION;
+
+SELECT SALARY * 0.20 AS DASARA_BONUS
+FROM DOORS_DIVISION;
+
+SELECT SALARY/ SALARY_BONUS AS NEW_SALARY
+FROM DOORS_DIVISION;
+
+SELECT SALARY % SALARY_BONUS AS DASARA_SPL
+FROM DOORS_DIVISION;
